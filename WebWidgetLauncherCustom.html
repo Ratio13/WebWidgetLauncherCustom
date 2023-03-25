@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+   <head>
+      <title>Hello World!</title>
+      <style>
+         #conversation-badge {
+  background: #D4D4D4;
+  color: Black;
+  width: 200px;
+  height: 20px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 10px 30px;
+  cursor: pointer;
+}
+
+#unread-indicator {
+  color: white;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.7;
+  background: black;
+  border-radius: 50%;
+  min-width: 20px;
+  height: 20px;
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+@keyframes tilt-shaking {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0eg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.tilt-animation {
+  animation: tilt-shaking 0.25s;
+}
+
+</style>
+ 
+   </head>
+
+   <body>
+      <p>Hello, World!</p>
+      
+
+   <div id='conversation-badge'>
+<!---   <span>Conversations</span> -->
+<img src='https://pathtoimage'>
+   <span id='unread-indicator'>1</span>
+
+
+      <!-- Start of {subdomain}Zendesk Widget script -->
+<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key={yourwidgetkey}}"> </script>
+<!-- End of {subdomain} Zendesk Widget script -->
+     
+
+     <script>
+         const conversationBadge = document.querySelector('#conversation-badge')
+         const unreadIndicator = document.querySelector('#unread-indicator')
+
+         const populateUnreadIndicator = (count) => {
+            if (!count) return resetUnreadIndicator()
+           
+           unreadIndicator.style.background = '#CC3333'
+           unreadIndicator.innerHTML = count
+           conversationBadge.setAttribute('class', 'tilt-animation');
+         }
+
+         const resetUnreadIndicator = () => {
+           unreadIndicator.style.background = 'black'
+           unreadIndicator.innerHTML = 0
+           conversationBadge.setAttribute('class', '');
+         }
+
+         // unread Message on listener
+         zE('messenger:on', 'unreadMessages', (count) => {
+           populateUnreadIndicator(count)
+         })
+
+         // on page load always close widget
+         zE('messenger', 'close');
+
+         conversationBadge.onclick = () => {
+           // open widget
+           zE('messenger', 'open');
+           // reset unread indicator
+           resetUnreadIndicator()
+         }
+      </script>
+
+</div>
+      
+   </body>
+</html>
